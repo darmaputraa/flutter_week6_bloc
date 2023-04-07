@@ -7,19 +7,20 @@ abstract class ContactsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddContact extends ContactsEvent {
-  final GetContact getContact;
-  const AddContact({
-    required this.getContact,
+class LoadContacts extends ContactsEvent {
+  final List<GetContact> contactList;
+
+  const LoadContacts({
+    this.contactList = const <GetContact>[],
   });
 
   @override
-  List<Object> get props => [getContact];
+  List<Object> get props => [contactList];
 }
 
-class UpdateContact extends ContactsEvent {
+class AddContact extends ContactsEvent {
   final GetContact getContact;
-  const UpdateContact({
+  const AddContact({
     required this.getContact,
   });
 
@@ -36,3 +37,14 @@ class DeleteContact extends ContactsEvent {
   @override
   List<Object> get props => [getContact];
 }
+
+
+// class UpdateContact extends ContactsEvent {
+//   final GetContact getContact;
+//   const UpdateContact({
+//     required this.getContact,
+//   });
+
+//   @override
+//   List<Object> get props => [getContact];
+// }

@@ -28,17 +28,19 @@ class ContactScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(top: 20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BlocBuilder<ContactsBloc, ContactsState>(builder: (context, state) {
-              if (state is OnLoadingContact) {
-                return const CircularProgressIndicator();
-              } else {
+              if (state is ContactsLoadingState) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (state is ContactsLoadedState) {
                 return Expanded(
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: state.allContacts.length,
+                    itemCount: state.contactList.length,
                     itemBuilder: (context, index) {
-                      var getContact = state.allContacts[index];
+                      var getContact = state.contactList[index];
                       return Card(
                         elevation: 2,
                         shadowColor: Colors.black,
@@ -86,13 +88,20 @@ class ContactScreen extends StatelessWidget {
                     },
                   ),
                 );
-                // } else if (state is ContactsInitial) {
-                //   return const Text(
-                //     'No Contact',
-                //     style: TextStyle(fontSize: 20),
-                //   );
-                // } else {
-                //   return Container();
+              } else if (state is ContactsErrorState) {
+                return const Center(
+                  child: Text(
+                    'No Contact',
+                    style: TextStyle(fontSize: 32),
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text(
+                    'No Contact',
+                    style: TextStyle(fontSize: 32),
+                  ),
+                );
               }
             }),
           ],
